@@ -11,4 +11,11 @@ func main() {
 
 	primes := [6]int{2, 3, 5, 7, 11, 13}
 	fmt.Println(primes)
+
+	// loop array with range
+	var total int
+	for _, v := range primes {
+		total += v
+	}
+	fmt.Println("Total:", total, "Average:", total/len(primes))
 }
