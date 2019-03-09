@@ -2,11 +2,18 @@ package main
 
 import (
 	"net/http"
+	"os"
 
 	"github.com/russross/blackfriday"
 )
 
 func main() {
+	// Heroku gives a PORT environment variable and expects our web application to bind to it
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "8080"
+	}
+
 	// handle the '/markdown' route
 	// http.HandleFunc can be think of handling routes via a function instead of an object
 	http.HandleFunc("/markdown", GenerateMarkDown)
@@ -16,7 +23,7 @@ func main() {
 	// http.FileServer returns an http.Handler
 	http.Handle("/", http.FileServer(http.Dir("public")))
 
-	http.ListenAndServe(":8080", nil)
+	http.ListenAndServe(":"+port, nil)
 }
 
 // renders Html from a form field containing markdown-formatted text
